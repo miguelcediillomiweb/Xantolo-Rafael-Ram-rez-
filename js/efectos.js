@@ -27,7 +27,10 @@
     window.setTimeout(()=>capa.remove(),4300);
   }
   $("abrirInvitacion").addEventListener("click", () => {
-    lluviaEspeluznante(); musicaSolicitada = true; cargarAPIYouTube(); const boton=$("abrirInvitacion"); boton.textContent="💀 ¡Sorpresa!"; boton.disabled=true;
+    // El toque del usuario inicia directamente la música ya preparada.
+    musicaSolicitada = true;
+    try { if (reproductorMusica && window.YT && window.YT.PlayerState) { reproductorMusica.unMute(); reproductorMusica.setVolume(32); reproductorMusica.playVideo(); } } catch (_) {}
+    lluviaEspeluznante(); cargarAPIYouTube(); const boton=$("abrirInvitacion"); boton.textContent="💀 ¡Sorpresa!"; boton.disabled=true;
     portada.classList.add("fuera"); invitacion.hidden = false;
     window.setTimeout(() => { portada.hidden = true; window.scrollTo({top:0,behavior:"smooth"}); }, 750);
   });
@@ -138,13 +141,13 @@
   let reproductorMusica = null;
   let musicaSolicitada = false;
   function crearReproductorMusica() {
-    if (!musicaSolicitada || !window.YT || !window.YT.Player || reproductorMusica) return;
+    if (!window.YT || !window.YT.Player || reproductorMusica) return;
     reproductorMusica = new YT.Player("reproductorMusica", {
       width: "1", height: "1", videoId: "elZVATZFe6A",
       playerVars: { autoplay: 1, controls: 0, disablekb: 1, fs: 0, playsinline: 1, rel: 0, loop: 1, playlist: "elZVATZFe6A", origin: window.location.origin },
       events: {
         onReady: event => {
-          try { event.target.setVolume(32); event.target.playVideo(); } catch (_) {}
+          try { event.target.setVolume(32); if (musicaSolicitada) event.target.playVideo(); } catch (_) {}
           const control = $("controlMusica");
           if (control) { control.hidden = false; control.textContent = "🎵 Pausar música"; }
           // Si el navegador bloquea el inicio, el control visible permite reintentarlo tras un toque.
@@ -274,6 +277,8 @@
   function resize(){const dpr=Math.min(window.devicePixelRatio||1,2);w=window.innerWidth;h=window.innerHeight;canvas.width=Math.floor(w*dpr);canvas.height=Math.floor(h*dpr);canvas.style.width=w+"px";canvas.style.height=h+"px";ctx.setTransform(dpr,0,0,dpr,0,0);particles=Array.from({length:Math.min(75,Math.floor(w/8))},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+.5,vy:Math.random()*.55+.12,vx:(Math.random()-.5)*.25,a:Math.random()*.7+.2,hue:[35,285,325,170][Math.floor(Math.random()*4)]}))}
   let last=0;function draw(t){if(t-last>32){last=t;ctx.clearRect(0,0,w,h);for(const p of particles){p.y-=p.vy;p.x+=p.vx;if(p.y<-5){p.y=h+5;p.x=Math.random()*w}if(p.x<-5)p.x=w+5;if(p.x>w+5)p.x=-5;ctx.globalAlpha=p.a*(.6+.4*Math.sin(t/700+p.x));ctx.fillStyle=p.hue===0?`rgba(255,255,255,${p.a})`:`hsl(${p.hue} 100% 68%)`;ctx.shadowBlur=10;ctx.shadowColor=ctx.fillStyle;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1;ctx.shadowBlur=0}requestAnimationFrame(draw)}
   window.addEventListener("resize",resize,{passive:true});resize();requestAnimationFrame(draw);
+  // Preparar la API antes del toque para que el botón pueda iniciar la música directamente.
+  cargarAPIYouTube();
 
   // Revelar la sorpresa con un efecto al llegar a ella al desplazarse por la página.
   const bloqueSorpresa = document.querySelector(".sorpresa-recre");
