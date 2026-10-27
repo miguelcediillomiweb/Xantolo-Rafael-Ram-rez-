@@ -129,3 +129,10 @@
 .reproductor-vertical iframe,.video-marco iframe{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;border:0!important}
 .cerrar-video{z-index:200!important}
 @media(max-width:600px){.modal-video{padding:0!important}.modal-caja{width:100vw!important;height:100dvh!important}.reproductor-vertical{width:100%!important;height:100%!important}}
+
+
+/* Ajuste urgente: portada más arriba y menos hueco entre la luna y el texto inicial */
+.portada{padding-top:24px!important;place-items:start center!important}
+.portada-marco{margin-top:0!important;padding-top:clamp(16px,3vw,28px)!important}
+.calavera{margin-top:0!important}
+@media(max-width:650px){.portada{padding-top:18px!important}.portada-marco{padding-top:16px!important}.luna{top:34px!important}}
