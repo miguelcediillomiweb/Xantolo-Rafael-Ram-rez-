@@ -36,10 +36,12 @@
   let cargandoYT = false;
   let cerrandoVideo = false;
   let videoTerminado = false;
+  let vigilanciaFinVideo = null;
 
   function efectoTeleAntigua() {
     if (cerrandoVideo) return;
     cerrandoVideo = true;
+    if (vigilanciaFinVideo) { clearInterval(vigilanciaFinVideo); vigilanciaFinVideo = null; }
     try { if (reproductorYT && reproductorYT.stopVideo) reproductorYT.stopVideo(); } catch (_) {}
     const efecto = document.createElement("div");
     efecto.className = "apagado-tele";
@@ -74,8 +76,25 @@
       },
       events: {
         onReady: event => {
-          // Inicia la reproducción. El cierre automático lo controla PlayerState.ENDED.
-          try { event.target.playVideo(); } catch (_) {}
+          // Inicia una sola reproducción y vigila el final como respaldo por si YouTube no emite ENDED.
+          try {
+            event.target.setLoop(false);
+            event.target.playVideo();
+          } catch (_) {}
+          if (vigilanciaFinVideo) clearInterval(vigilanciaFinVideo);
+          vigilanciaFinVideo = window.setInterval(() => {
+            if (cerrandoVideo || videoTerminado || !reproductorYT) return;
+            try {
+              const duracion = reproductorYT.getDuration();
+              const actual = reproductorYT.getCurrentTime();
+              const estado = reproductorYT.getPlayerState();
+              if (duracion > 0 && actual >= duracion - 0.65 && estado !== YT.PlayerState.BUFFERING) {
+                videoTerminado = true;
+                reproductorYT.pauseVideo();
+                efectoTeleAntigua();
+              }
+            } catch (_) {}
+          }, 400);
         },
         onStateChange: event => {
           if (event.data === YT.PlayerState.ENDED && !videoTerminado) {
