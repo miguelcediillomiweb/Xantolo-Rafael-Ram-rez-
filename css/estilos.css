@@ -228,3 +228,8 @@
  .portada-marco:after{margin-top:7px!important}
  .portada-marco .nota-tocar{margin-top:8px!important}
 }
+
+/* Control discreto de música tradicional de Xantolo */
+.control-musica{position:fixed;right:12px;bottom:14px;z-index:1200;border:1px solid #f3cc7a;border-radius:999px;padding:10px 14px;background:rgba(29,12,39,.94);color:#fff1c9;font:800 .88rem Nunito, sans-serif;box-shadow:0 0 16px rgba(255,185,69,.42);cursor:pointer}
+.control-musica[hidden]{display:none!important}
+.reproductor-musica{position:fixed;width:1px;height:1px;left:-10px;bottom:0;overflow:hidden;opacity:.01;pointer-events:none}
