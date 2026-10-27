@@ -32,70 +32,85 @@
     window.setTimeout(() => { portada.hidden = true; window.scrollTo({top:0,behavior:"smooth"}); }, 750);
   });
   let reproductorYT = null;
-  let apiYTLista = false;
-  let callbackYTAnterior = null;
-  function cargarAPIYouTube() {
-    if (window.YT && window.YT.Player) { apiYTLista = true; return; }
-    if (!document.querySelector('script[data-youtube-iframe-api]')) {
-      const tag = document.createElement("script");
-      tag.src = "https://www.youtube.com/iframe_api";
-      tag.async = true;
-      tag.dataset.youtubeIframeApi = "true";
-      document.head.appendChild(tag);
-    }
-    if (!window.__xantoloYTCallbackInstalado) {
-      callbackYTAnterior = window.onYouTubeIframeAPIReady;
-      window.onYouTubeIframeAPIReady = function() {
-        apiYTLista = true;
-        if (typeof callbackYTAnterior === "function") callbackYTAnterior();
-        crearReproductorYT();
-      };
-      window.__xantoloYTCallbackInstalado = true;
-    }
-  }
+  let apiYTLista = !!(window.YT && window.YT.Player);
+  let cargandoYT = false;
   let cerrandoVideo = false;
+  let videoTerminado = false;
+
   function efectoTeleAntigua() {
     if (cerrandoVideo) return;
     cerrandoVideo = true;
+    try { if (reproductorYT && reproductorYT.stopVideo) reproductorYT.stopVideo(); } catch (_) {}
     const efecto = document.createElement("div");
     efecto.className = "apagado-tele";
     efecto.setAttribute("aria-hidden", "true");
     efecto.innerHTML = '<span class="apagado-linea"></span>';
     modal.appendChild(efecto);
     window.setTimeout(() => {
+      try { if (reproductorYT && reproductorYT.destroy) reproductorYT.destroy(); } catch (_) {}
+      reproductorYT = null;
+      contenedorVideo.replaceChildren();
+      efecto.remove();
       modal.classList.remove("abierto");
       modal.setAttribute("aria-hidden", "true");
-      contenedorVideo.innerHTML = "";
-      if (efecto.isConnected) efecto.remove();
-      reproductorYT = null;
-      cerrandoVideo = false;
       document.body.style.overflow = "";
-    }, 720);
+      cerrandoVideo = false;
+      videoTerminado = false;
+    }, 760);
   }
-  function cerrarVideoAutomatico() { efectoTeleAntigua(); }
+
   function crearReproductorYT() {
-    if (!apiYTLista || !window.YT || !window.YT.Player || !modal.classList.contains("abierto") || cerrandoVideo) return;
-    if (!document.getElementById("reproductorAtaud") || reproductorYT) return;
+    if (!apiYTLista || !window.YT || !window.YT.Player ||
+        !modal.classList.contains("abierto") || cerrandoVideo ||
+        reproductorYT || !document.getElementById("reproductorAtaud")) return;
     reproductorYT = new YT.Player("reproductorAtaud", {
-      width: "100%", height: "100%", videoId: "5xaJE-PWyLs",
-      playerVars: { autoplay: 1, controls: 0, disablekb: 1, fs: 0, playsinline: 1, rel: 0, modestbranding: 1, iv_load_policy: 3, enablejsapi: 1 },
+      width: "100%",
+      height: "100%",
+      videoId: "5xaJE-PWyLs",
+      playerVars: {
+        autoplay: 1, controls: 0, disablekb: 1, fs: 0, playsinline: 1,
+        rel: 0, modestbranding: 1, iv_load_policy: 3, loop: 0,
+        cc_load_policy: 0, origin: window.location.origin
+      },
       events: {
-        onReady: event => { try { event.target.playVideo(); } catch (_) {} },
-        onStateChange: event => { if (event.data === YT.PlayerState.ENDED) cerrarVideoAutomatico(); }
+        onReady: event => {
+          // El clic del ataúd inicia el reproductor; no crear ni arrancar otro player.
+          try { event.target.playVideo(); } catch (_) {}
+        },
+        onStateChange: event => {
+          if (event.data === YT.PlayerState.ENDED && !videoTerminado) {
+            videoTerminado = true;
+            efectoTeleAntigua();
+          }
+        },
+        onError: () => {
+          // Evita dejar una ventana negra abierta si YouTube no permite reproducir el video.
+          if (!videoTerminado) {
+            videoTerminado = true;
+            efectoTeleAntigua();
+          }
+        }
       }
     });
   }
+
   function cargarAPIYouTube() {
-    if (window.YT && window.YT.Player) { apiYTLista = true; return; }
-    if (!window.__xantoloYTCallbackInstalado) {
-      callbackYTAnterior = window.onYouTubeIframeAPIReady;
-      window.onYouTubeIframeAPIReady = function() {
-        apiYTLista = true;
-        if (typeof callbackYTAnterior === "function") callbackYTAnterior();
-        crearReproductorYT();
-      };
-      window.__xantoloYTCallbackInstalado = true;
+    if (window.YT && window.YT.Player) {
+      apiYTLista = true;
+      crearReproductorYT();
+      return;
     }
+    if (cargandoYT) return;
+    cargandoYT = true;
+    const callbackAnterior = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = function() {
+      if (typeof callbackAnterior === "function") {
+        try { callbackAnterior(); } catch (_) {}
+      }
+      apiYTLista = true;
+      cargandoYT = false;
+      crearReproductorYT();
+    };
     if (!document.querySelector('script[data-youtube-iframe-api]')) {
       const tag = document.createElement("script");
       tag.src = "https://www.youtube.com/iframe_api";
@@ -104,15 +119,16 @@
       document.head.appendChild(tag);
     }
   }
+
   function abrirVideoAtaud() {
-    if (cerrandoVideo) return;
-    lluviaAtaud();
+    if (modal.classList.contains("abierto") || cerrandoVideo) return;
+    videoTerminado = false;
     contenedorVideo.innerHTML = '<div id="reproductorAtaud" class="reproductor-vertical"></div>';
     modal.classList.add("abierto");
     modal.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
+    lluviaAtaud();
     cargarAPIYouTube();
-    if (apiYTLista) crearReproductorYT();
   }
   $("abrirVideo").addEventListener("click", abrirVideoAtaud);
   // Araña pequeña que baja con un hilo corto unido a ella; sin raya blanca por toda la pantalla.
