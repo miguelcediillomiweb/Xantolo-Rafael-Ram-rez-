@@ -233,3 +233,16 @@
 .control-musica{position:fixed;right:12px;bottom:14px;z-index:1200;border:1px solid #f3cc7a;border-radius:999px;padding:10px 14px;background:rgba(29,12,39,.94);color:#fff1c9;font:800 .88rem Nunito, sans-serif;box-shadow:0 0 16px rgba(255,185,69,.42);cursor:pointer}
 .control-musica[hidden]{display:none!important}
 .reproductor-musica{position:fixed;width:200px;height:200px;left:-250px;top:-250px;overflow:hidden;opacity:0;pointer-events:none;z-index:-1}.reproductor-musica iframe{width:200px!important;height:200px!important;border:0;pointer-events:none}
+
+
+/* Botón de salida animado bajo la cuenta regresiva */
+.salida-invitacion{position:relative;margin:22px auto 4px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.boton-salida{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:11px;min-height:54px;padding:12px 24px;border:2px solid #b9f7ff;border-radius:999px;color:#fff;background:linear-gradient(110deg,#31205f,#54217a,#263e76);font-weight:900;box-shadow:0 0 12px #79eaff88,0 0 30px #9b5cff55,inset 0 0 12px #fff2;transition:transform .2s,box-shadow .2s;overflow:hidden}
+.boton-salida:hover,.boton-salida:focus-visible{transform:translateY(-3px);box-shadow:0 0 18px #79eaffbb,0 0 38px #9b5cff88;outline:2px solid #fff;outline-offset:3px}
+.fantasma-salida{display:inline-block;font-size:1.65rem;filter:drop-shadow(0 0 7px #b7f5ff);animation:fantasmaSalidaFlota 1.5s ease-in-out infinite}
+.boton-salida.saliendo .fantasma-salida{animation:fantasmaSeVa 1.1s ease-in forwards}
+.boton-salida.saliendo{pointer-events:none;opacity:.75}
+.mensaje-salida{margin:0;color:#d9faff;font-weight:800;text-shadow:0 0 12px #7bdfff;animation:entrada .45s both}
+@keyframes fantasmaSalidaFlota{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-7px) rotate(5deg)}}
+@keyframes fantasmaSeVa{0%{transform:translate(0,0) scale(1);opacity:1}45%{transform:translate(24px,-24px) scale(1.15);opacity:1}100%{transform:translate(115vw,-70vh) scale(.25) rotate(28deg);opacity:0}}
+@media(prefers-reduced-motion:reduce){.fantasma-salida,.boton-salida.saliendo .fantasma-salida{animation:none!important}}
