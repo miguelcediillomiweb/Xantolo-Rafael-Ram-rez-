@@ -72,3 +72,9 @@
 .programa-adornos{margin:22px 0 0;font-size:clamp(1.2rem,4vw,1.9rem);letter-spacing:.12em;filter:drop-shadow(0 0 8px #ff9638);animation:flota 3s ease-in-out infinite}
 @keyframes resplandorPrograma{from{filter:brightness(.95);text-shadow:0 0 8px #ff7b27,0 0 15px #c82a8d}to{filter:brightness(1.15);text-shadow:0 0 14px #ffb331,0 0 30px #f42e9a,0 0 42px #ff6b26}}
 @media(max-width:520px){.banner-programa{min-height:300px;margin:22px 2px;padding:18px 12px;border-radius:18px;background-position:center}.banner-programa-contenido{padding:20px 12px}.programa-adornos{letter-spacing:0}}
+
+
+/* Araña colgante: una sola araña recorre distintos puntos del ancho de la página */
+.arana-colgante{position:absolute;top:0;left:var(--arana-x,50%);z-index:8;width:clamp(42px,7vw,76px);height:auto;pointer-events:none;user-select:none;filter:drop-shadow(0 0 8px #000) drop-shadow(0 0 5px #ff8a32aa);transform:translateX(-50%);animation:arana-bajada var(--arana-duracion,8s) linear forwards;will-change:top;}
+@keyframes arana-bajada{0%{top:-100px}100%{top:calc(100vh + 100px)}}
+@media(prefers-reduced-motion:reduce){.arana-colgante{animation-duration:18s}}
