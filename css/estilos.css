@@ -8,3 +8,13 @@
 .cenefa-titulo span{color:#ffd36b;display:inline-block;padding:0 .2em;animation:cenefaDestello 2s ease-in-out infinite alternate}
 @keyframes cenefaBrillo{from{filter:brightness(.94)}to{filter:brightness(1.2)}}@keyframes cenefaDestello{from{transform:scale(.9) rotate(-8deg)}to{transform:scale(1.12) rotate(8deg)}}
 @media(max-width:480px){.cenefa-escuela{min-height:76px;padding:10px 8px 12px}.cenefa-titulo{max-width:100%;font-size:clamp(.95rem,4.3vw,1.35rem);letter-spacing:.015em}.cenefa-escuela img{object-position:center 40%}}
+
+
+/* Ilustraciones de Día de Muertos a los lados de la invitación */
+.adornos-muertos{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.adorno-muerto{position:absolute;width:clamp(86px,13vw,178px);height:auto;max-height:34vh;object-fit:contain;filter:drop-shadow(0 0 12px #ff9a3d88) drop-shadow(0 5px 9px #0008);opacity:.9;animation:flotaAdorno 5s ease-in-out infinite alternate}
+.adorno-izquierdo{left:clamp(5px,2vw,28px);top:34%;transform:rotate(-7deg)}
+.adorno-derecho{right:clamp(5px,2vw,28px);top:58%;transform:rotate(7deg);animation-delay:-2.5s}
+@keyframes flotaAdorno{from{translate:0 -7px;filter:drop-shadow(0 0 8px #ff9a3d66) drop-shadow(0 5px 8px #0008)}to{translate:0 8px;filter:drop-shadow(0 0 18px #f42e9a88) drop-shadow(0 7px 12px #0009)}}
+@media(max-width:760px){.adorno-muerto{width:clamp(55px,15vw,92px);max-height:20vh;opacity:.82}.adorno-izquierdo{left:2px;top:28%}.adorno-derecho{right:2px;top:67%}}
+@media(max-width:420px){.adorno-muerto{width:54px;max-height:15vh;opacity:.72}.adorno-izquierdo{top:22%}.adorno-derecho{top:73%}}
