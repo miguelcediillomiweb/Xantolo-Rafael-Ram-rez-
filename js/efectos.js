@@ -27,7 +27,7 @@
     window.setTimeout(()=>capa.remove(),4300);
   }
   $("abrirInvitacion").addEventListener("click", () => {
-    lluviaEspeluznante(); const boton=$("abrirInvitacion"); boton.textContent="💀 ¡Sorpresa!"; boton.disabled=true;
+    lluviaEspeluznante(); musicaSolicitada = true; cargarAPIYouTube(); const boton=$("abrirInvitacion"); boton.textContent="💀 ¡Sorpresa!"; boton.disabled=true;
     portada.classList.add("fuera"); invitacion.hidden = false;
     window.setTimeout(() => { portada.hidden = true; window.scrollTo({top:0,behavior:"smooth"}); }, 750);
   });
@@ -58,6 +58,7 @@
       document.body.style.overflow = "";
       cerrandoVideo = false;
       videoTerminado = false;
+      try { if (reproductorMusica && reproductorMusica.playVideo) reproductorMusica.playVideo(); } catch (_) {}
     }, 760);
   }
 
@@ -134,6 +135,40 @@
     });
   }
 
+  let reproductorMusica = null;
+  let musicaSolicitada = false;
+  function crearReproductorMusica() {
+    if (!musicaSolicitada || !window.YT || !window.YT.Player || reproductorMusica) return;
+    reproductorMusica = new YT.Player("reproductorMusica", {
+      width: "1", height: "1", videoId: "elZVATZFe6A",
+      playerVars: { autoplay: 1, controls: 0, disablekb: 1, fs: 0, playsinline: 1, rel: 0, loop: 1, playlist: "elZVATZFe6A", origin: window.location.origin },
+      events: {
+        onReady: event => {
+          try { event.target.setVolume(32); event.target.playVideo(); } catch (_) {}
+          const control = $("controlMusica");
+          if (control) { control.hidden = false; control.textContent = "🎵 Pausar música"; }
+        },
+        onStateChange: event => {
+          const control = $("controlMusica");
+          if (!control || !window.YT) return;
+          if (event.data === YT.PlayerState.PLAYING) control.textContent = "🎵 Pausar música";
+          if (event.data === YT.PlayerState.PAUSED) control.textContent = "▶️ Reanudar música";
+        },
+        onError: () => {
+          const control = $("controlMusica");
+          if (control) { control.hidden = false; control.textContent = "🎵 Música no disponible"; control.disabled = true; }
+        }
+      }
+    });
+  }
+  const controlMusica = $("controlMusica");
+  if (controlMusica) controlMusica.addEventListener("click", () => {
+    if (!reproductorMusica) return;
+    try {
+      if (reproductorMusica.getPlayerState() === YT.PlayerState.PLAYING) reproductorMusica.pauseVideo();
+      else reproductorMusica.playVideo();
+    } catch (_) {}
+  });
   function cargarAPIYouTube() {
     if (window.YT && window.YT.Player) {
       apiYTLista = true;
@@ -150,6 +185,7 @@
       apiYTLista = true;
       cargandoYT = false;
       crearReproductorYT();
+      crearReproductorMusica();
     };
     if (!document.querySelector('script[data-youtube-iframe-api]')) {
       const tag = document.createElement("script");
@@ -163,6 +199,7 @@
   function abrirVideoAtaud() {
     if (modal.classList.contains("abierto") || cerrandoVideo) return;
     videoTerminado = false;
+    try { if (reproductorMusica && reproductorMusica.pauseVideo) reproductorMusica.pauseVideo(); } catch (_) {}
     contenedorVideo.innerHTML = '<div id="reproductorAtaud" class="reproductor-vertical"></div><p id="avisoVideoError" class="aviso-video-error" hidden></p>';
     modal.classList.add("abierto");
     modal.setAttribute("aria-hidden", "false");
