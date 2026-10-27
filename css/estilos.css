@@ -136,3 +136,24 @@
 .portada-marco{margin-top:0!important;padding-top:clamp(16px,3vw,28px)!important}
 .calavera{margin-top:0!important}
 @media(max-width:650px){.portada{padding-top:18px!important}.portada-marco{padding-top:16px!important}.luna{top:34px!important}}
+
+
+/* Programa escolar: tarjetas luminosas con entradas alternadas */
+.programa-listado{width:min(100%,760px)}
+.programa-intro{margin:0 auto 20px;color:#fff0ce;font-size:clamp(.95rem,2.8vw,1.15rem);font-weight:900;line-height:1.5}
+.lista-programa{list-style:none;display:grid;gap:11px;margin:0;padding:0;text-align:left}
+.lista-programa li{display:flex;align-items:center;gap:13px;min-width:0;padding:13px clamp(10px,3vw,19px);border:1px solid #ffd36b99;border-radius:15px;background:linear-gradient(110deg,#24102deF,#4a1c55eF);box-shadow:0 5px 16px #0005,inset 0 0 16px #ffbd4d0b;opacity:0;animation:programaEntraDerecha .75s cubic-bezier(.2,.75,.25,1) forwards;animation-delay:calc(var(--orden,0)*.16s);transition:transform .25s,box-shadow .25s}
+.lista-programa li:nth-child(even){animation-name:programaEntraIzquierda}
+.lista-programa li:nth-child(1){--orden:1}.lista-programa li:nth-child(2){--orden:2}.lista-programa li:nth-child(3){--orden:3}.lista-programa li:nth-child(4){--orden:4}.lista-programa li:nth-child(5){--orden:5}.lista-programa li:nth-child(6){--orden:6}.lista-programa li:nth-child(7){--orden:7}.lista-programa li:nth-child(8){--orden:8}.lista-programa li:nth-child(9){--orden:9}
+.lista-programa li:hover{transform:translateY(-2px);box-shadow:0 7px 22px #f42e9a33,0 0 13px #ffd36b22}
+.programa-emoji{flex:0 0 43px;display:grid;place-items:center;width:43px;height:43px;border-radius:13px;background:#ffbd4d18;border:1px solid #ffd36b88;font-size:1.6rem;filter:drop-shadow(0 0 7px #ff9d3d66);animation:emojiPrograma 2.5s ease-in-out infinite alternate}
+.lista-programa li:nth-child(even) .programa-emoji{animation-delay:-1.2s}
+.lista-programa li>div{display:grid;gap:3px;min-width:0}
+.lista-programa li strong{color:#55e3cd;font-size:clamp(.92rem,2.7vw,1.08rem);line-height:1.3}
+.lista-programa li div span{color:#fff5e4;font-size:clamp(.9rem,2.7vw,1.08rem);font-weight:800;line-height:1.4;overflow-wrap:anywhere}
+.lista-programa li b{color:#ffd36b}
+@keyframes programaEntraDerecha{from{opacity:0;transform:translateX(65px) scale(.97)}to{opacity:1;transform:translateX(0) scale(1)}}
+@keyframes programaEntraIzquierda{from{opacity:0;transform:translateX(-65px) scale(.97)}to{opacity:1;transform:translateX(0) scale(1)}}
+@keyframes emojiPrograma{from{transform:translateY(0) rotate(-5deg)}to{transform:translateY(-4px) rotate(5deg)}}
+@media(max-width:420px){.lista-programa{gap:8px}.lista-programa li{gap:9px;padding:11px 9px}.programa-emoji{flex-basis:36px;width:36px;height:36px;font-size:1.35rem}}
+@media(prefers-reduced-motion:reduce){.lista-programa li{opacity:1;animation:none}.programa-emoji{animation:none}}
