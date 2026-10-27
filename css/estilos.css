@@ -33,3 +33,7 @@
 .ofrenda-elementos{font-size:clamp(1.4rem,4vw,2rem);letter-spacing:.25em;margin:10px 0;filter:drop-shadow(0 0 8px #ff9a3d55)}
 .ofrenda-final{font-family:"Chelsea Market",cursive;color:#ffbd4d;font-size:clamp(1.3rem,4vw,1.8rem);margin:8px 0 0}
 @media(max-width:420px){.ofrenda-cuenta{margin:22px 3px 5px;padding:17px 8px}.cuenta-digitos{gap:5px}.cuenta-digitos>div{padding:10px 2px}.cuenta-digitos span{letter-spacing:0}}
+
+
+/* Enlace directo a la ubicación del evento */
+.enlace-mapa{display:inline-block;margin-top:9px;padding:7px 10px;border:1px solid #35dfc5a6;border-radius:999px;color:#8df6e4;background:#102a35;font-size:.78rem;font-weight:900;text-decoration:none;box-shadow:0 0 12px #35dfc522;transition:transform .2s,box-shadow .2s}.enlace-mapa:hover,.enlace-mapa:focus-visible{transform:translateY(-2px);box-shadow:0 0 17px #35dfc566;outline:2px solid #35dfc5}
