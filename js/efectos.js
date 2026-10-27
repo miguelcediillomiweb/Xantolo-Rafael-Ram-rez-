@@ -20,7 +20,14 @@
     [["cuentaDias",dias],["cuentaHoras",horas],["cuentaMinutos",minutos],["cuentaSegundos",segundos]].forEach(([id,n]) => { const el=$(id); if(el) el.textContent=String(n).padStart(2,"0"); });
   }
   actualizarCuenta(); window.setInterval(actualizarCuenta,1000);
+  function lluviaEspeluznante(){
+    const capa=document.createElement("div"); capa.className="lluvia-espeluznante"; capa.setAttribute("aria-hidden","true"); document.body.appendChild(capa);
+    const figuras=["🦴","🦇","💀","🎃","🦴","🦇","👻","🎃","☠️","🦇","💀","🦴"];
+    for(let i=0;i<64;i++){const pieza=document.createElement("span");pieza.className="pieza-voladora";pieza.textContent=figuras[Math.floor(Math.random()*figuras.length)];pieza.style.left=(Math.random()*100)+"%";pieza.style.setProperty("--dx",((Math.random()-.5)*440)+"px");pieza.style.setProperty("--rot",((Math.random()-.5)*1100)+"deg");pieza.style.setProperty("--dur",(1.4+Math.random()*2.2)+"s");pieza.style.setProperty("--delay",(Math.random()*.45)+"s");pieza.style.fontSize=(20+Math.random()*30)+"px";capa.appendChild(pieza)}
+    window.setTimeout(()=>capa.remove(),4300);
+  }
   $("abrirInvitacion").addEventListener("click", () => {
+    lluviaEspeluznante(); const boton=$("abrirInvitacion"); boton.textContent="💀 ¡Sorpresa!"; boton.disabled=true;
     portada.classList.add("fuera"); invitacion.hidden = false;
     window.setTimeout(() => { portada.hidden = true; window.scrollTo({top:0,behavior:"smooth"}); }, 750);
   });
