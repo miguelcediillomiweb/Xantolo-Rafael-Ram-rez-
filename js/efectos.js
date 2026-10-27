@@ -31,19 +31,62 @@
     portada.classList.add("fuera"); invitacion.hidden = false;
     window.setTimeout(() => { portada.hidden = true; window.scrollTo({top:0,behavior:"smooth"}); }, 750);
   });
-  function videoHTML(url) {
-    const raw = (url || "").trim();
-    if (!raw) return '<div class="sin-video"><p>🎃 Falta configurar el video</p><p>Abre <code>js/config.js</code> y pega el enlace de YouTube o la ruta del archivo MP4 en <code>video</code>.</p></div>';
-    const yt = raw.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
-    if (yt) return `<iframe src="https://www.youtube-nocookie.com/embed/${yt[1]}?autoplay=1&rel=0" title="Video de Halloween" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
-    if (/\.mp4(?:[?#].*)?$/i.test(raw) || raw.startsWith("video/")) { const safe = raw.replace(/&/g,"&amp;").replace(/"/g,"&quot;"); return `<video src="${safe}" controls autoplay playsinline preload="metadata">Tu navegador no puede reproducir este video.</video>`; }
-    return '<div class="sin-video"><p>⚠️ No reconozco el enlace.</p><p>Usa un enlace de YouTube o la ruta de un archivo MP4.</p></div>';
+  let reproductorYT = null;
+  let apiYTLista = false;
+  let callbackYTAnterior = null;
+  function cargarAPIYouTube() {
+    if (window.YT && window.YT.Player) { apiYTLista = true; crearReproductorYT(); return; }
+    if (!document.querySelector('script[data-youtube-iframe-api]')) {
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      tag.async = true;
+      tag.dataset.youtubeIframeApi = "true";
+      document.head.appendChild(tag);
+    }
+    if (!window.__xantoloYTCallbackInstalado) {
+      callbackYTAnterior = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = function() {
+        apiYTLista = true;
+        if (typeof callbackYTAnterior === "function") callbackYTAnterior();
+        crearReproductorYT();
+      };
+      window.__xantoloYTCallbackInstalado = true;
+    }
   }
-  $("abrirVideo").addEventListener("click", () => { contenedorVideo.innerHTML = videoHTML(config.video); modal.classList.add("abierto"); modal.setAttribute("aria-hidden","false"); document.body.style.overflow="hidden"; $("cerrarVideo").focus(); });
-  function cerrarVideo(){ modal.classList.remove("abierto"); modal.setAttribute("aria-hidden","true"); contenedorVideo.innerHTML=""; document.body.style.overflow=""; $("abrirVideo").focus(); }
-  $("cerrarVideo").addEventListener("click",cerrarVideo); modal.addEventListener("click",e=>{if(e.target===modal)cerrarVideo()}); document.addEventListener("keydown",e=>{if(e.key==="Escape"&&modal.classList.contains("abierto"))cerrarVideo()});
-  const style=document.createElement("style"); style.textContent='.sin-video{height:100%;min-height:180px;display:grid;place-content:center;padding:20px;color:#fff0ce;text-align:center;background:radial-gradient(circle,#35164d,#050208)}.sin-video p{margin:6px}.sin-video code{color:#ffd36b;overflow-wrap:anywhere}'; document.head.appendChild(style);
-
+  function cerrarVideoAutomatico() {
+    modal.classList.remove("abierto");
+    modal.setAttribute("aria-hidden","true");
+    contenedorVideo.innerHTML = "";
+    reproductorYT = null;
+    document.body.style.overflow = "";
+  }
+  function crearReproductorYT() {
+    if (!apiYTLista || !window.YT || !window.YT.Player || !modal.classList.contains("abierto")) return;
+    if (!document.getElementById("reproductorAtaud")) return;
+    reproductorYT = new YT.Player("reproductorAtaud", {
+      width: "100%",
+      height: "100%",
+      videoId: "5xaJE-PWyLs",
+      playerVars: {
+        autoplay: 1, controls: 0, disablekb: 1, fs: 0, playsinline: 1,
+        rel: 0, modestbranding: 1, iv_load_policy: 3, enablejsapi: 1
+      },
+      events: {
+        onReady: event => { try { event.target.playVideo(); } catch (_) {} },
+        onStateChange: event => { if (event.data === YT.PlayerState.ENDED) cerrarVideoAutomatico(); }
+      }
+    });
+  }
+  function abrirVideoAtaud() {
+    contenedorVideo.innerHTML = '<div id="reproductorAtaud" class="reproductor-vertical"></div>';
+    modal.classList.add("abierto");
+    modal.setAttribute("aria-hidden","false");
+    document.body.style.overflow = "hidden";
+    cargarAPIYouTube();
+    if (apiYTLista) crearReproductorYT();
+  }
+  $("abrirVideo").addEventListener("click", abrirVideoAtaud);
+  // No hay botón de cierre: al terminar el video el reproductor desaparece solo.
   // La araña se crea solo después de abrir la invitación; nunca aparece en la portada.
   let aranaIniciada = false;
   function iniciarAranaColgante() {
