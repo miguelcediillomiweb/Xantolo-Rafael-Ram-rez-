@@ -17,3 +17,19 @@
 @keyframes flotaAdorno{from{transform:translateY(-4px) rotate(-4deg)}to{transform:translateY(5px) rotate(4deg)}}
 @media(max-width:760px){.orilla-muertos{padding:0 1px}.orilla-columna{width:clamp(20px,5vw,31px)}.orilla-columna span{font-size:clamp(15px,4vw,25px);filter:drop-shadow(0 0 5px #ff9a3d77)}.orilla-columna span:nth-child(3n){font-size:clamp(14px,3.6vw,22px)}}
 @media(max-width:420px){.orilla-columna{width:18px}.orilla-columna span{font-size:16px}.orilla-columna span:nth-child(3n){font-size:14px}}
+
+
+/* Banner inferior de cuenta regresiva, inspirado en una ofrenda tradicional */
+.ofrenda-cuenta{position:relative;isolation:isolate;overflow:hidden;margin:32px auto 8px;padding:24px clamp(12px,3vw,30px) 20px;max-width:860px;border:2px solid #e8a64d;border-radius:20px 20px 8px 8px;background:linear-gradient(180deg,#32133d 0%,#180a22 70%,#3b1b22 100%);box-shadow:0 0 0 5px #e8a64d22,0 0 30px #f42e9a2b,inset 0 0 35px #ffb33112}
+.ofrenda-cuenta:before{content:"";position:absolute;z-index:-1;inset:0;background:radial-gradient(ellipse at 50% 100%,#ff762d30,transparent 60%),radial-gradient(circle at 10% 30%,#d6248a20,transparent 30%),radial-gradient(circle at 90% 30%,#19b7a420,transparent 30%)}
+.ofrenda-guirnalda{color:#ffbd4d;letter-spacing:.35em;font-size:clamp(1rem,3vw,1.5rem);border-bottom:1px dashed #ffbd4d88;padding-bottom:10px}
+.ofrenda-sobretitulo{margin:15px 0 4px;color:#55e3cd;font-weight:900;letter-spacing:.08em}
+.ofrenda-cuenta h3{font-family:"Chelsea Market",cursive;color:#fff0ce;font-size:clamp(1.25rem,4vw,2rem);margin:8px 0 20px;text-shadow:0 0 14px #ff762d88}
+.cuenta-digitos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;max-width:650px;margin:0 auto}
+.cuenta-digitos>div{padding:12px 4px;border:1px solid #f6bc5e88;border-radius:12px;background:linear-gradient(180deg,#52204d,#20102d);box-shadow:inset 0 0 15px #ffad3d12,0 5px 12px #0005}
+.cuenta-digitos strong{display:block;font-family:"Chelsea Market",cursive;font-size:clamp(1.5rem,5vw,2.5rem);line-height:1.2;color:#ffd36b;text-shadow:0 0 12px #ff6b26}
+.cuenta-digitos span{display:block;margin-top:6px;font-size:clamp(.55rem,1.8vw,.75rem);font-weight:900;letter-spacing:.08em;color:#f6b8dd}
+.ofrenda-fecha{color:#fff0ce;font-weight:900;margin:18px 0 8px}
+.ofrenda-elementos{font-size:clamp(1.4rem,4vw,2rem);letter-spacing:.25em;margin:10px 0;filter:drop-shadow(0 0 8px #ff9a3d55)}
+.ofrenda-final{font-family:"Chelsea Market",cursive;color:#ffbd4d;font-size:clamp(1.3rem,4vw,1.8rem);margin:8px 0 0}
+@media(max-width:420px){.ofrenda-cuenta{margin:22px 3px 5px;padding:17px 8px}.cuenta-digitos{gap:5px}.cuenta-digitos>div{padding:10px 2px}.cuenta-digitos span{letter-spacing:0}}
