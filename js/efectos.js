@@ -150,10 +150,8 @@
       botonSalir.classList.add("saliendo");
       botonSalir.disabled = true;
       if (mensajeSalida) mensajeSalida.hidden = false;
-      window.setTimeout(() => {
-        if (invitacion) invitacion.classList.add("invitacion-finalizada");
-        window.scrollTo({top:0,behavior:"smooth"});
-      }, 1150);
+      // Mantener visible la despedida en la parte inferior para que el visitante la lea.
+
     });
   }
 
