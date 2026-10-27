@@ -140,7 +140,7 @@
   function crearReproductorMusica() {
     if (!musicaSolicitada || !window.YT || !window.YT.Player || reproductorMusica) return;
     reproductorMusica = new YT.Player("reproductorMusica", {
-      width: "180", height: "102", videoId: "elZVATZFe6A",
+      width: "1", height: "1", videoId: "elZVATZFe6A",
       playerVars: { autoplay: 1, controls: 0, disablekb: 1, fs: 0, playsinline: 1, rel: 0, loop: 1, playlist: "elZVATZFe6A", origin: window.location.origin },
       events: {
         onReady: event => {
