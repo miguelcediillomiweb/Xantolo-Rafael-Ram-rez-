@@ -74,7 +74,8 @@
 @media(max-width:520px){.banner-programa{min-height:300px;margin:22px 2px;padding:18px 12px;border-radius:18px;background-position:center}.banner-programa-contenido{padding:20px 12px}.programa-adornos{letter-spacing:0}}
 
 
-/* Araña colgante: una sola araña recorre distintos puntos del ancho de la página */
-.arana-colgante{position:absolute;top:0;left:var(--arana-x,50%);z-index:8;width:clamp(42px,7vw,76px);height:auto;pointer-events:none;user-select:none;filter:drop-shadow(0 0 8px #000) drop-shadow(0 0 5px #ff8a32aa);transform:translateX(-50%);animation:arana-bajada var(--arana-duracion,8s) linear forwards;will-change:top;}
+/* Araña colgante: hilo blanco visible y descenso lento tras abrir la invitación */
+.arana-hilo{position:fixed;top:0;left:50%;z-index:7;width:2px;height:100vh;background:#fff;box-shadow:0 0 4px #fff,0 0 8px #dcecff;pointer-events:none;opacity:.95}
+.arana-colgante{position:fixed;top:0;left:var(--arana-x,50%);z-index:8;width:clamp(42px,7vw,76px);height:auto;pointer-events:none;user-select:none;filter:drop-shadow(0 0 5px #000) drop-shadow(0 0 3px #fff8);transform:translateX(-50%);animation:arana-bajada var(--arana-duracion,22s) linear forwards;will-change:top}
 @keyframes arana-bajada{0%{top:-100px}100%{top:calc(100vh + 100px)}}
-@media(prefers-reduced-motion:reduce){.arana-colgante{animation-duration:18s}}
+@media(prefers-reduced-motion:reduce){.arana-colgante{animation-duration:30s}}
