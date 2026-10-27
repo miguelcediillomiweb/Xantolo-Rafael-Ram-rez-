@@ -44,3 +44,16 @@
 @keyframes brujaVuelo{0%{transform:translate3d(10px,4px,0) rotate(-9deg)}45%{transform:translate3d(-12px,14px,0) rotate(4deg)}100%{transform:translate3d(-27px,-7px,0) rotate(-5deg)}}
 @media(max-width:650px){.luna{right:6%;top:66px;width:clamp(48px,13vw,72px);opacity:.58}.cielo-terror{top:47px;height:175px}.criatura{opacity:.72}.criatura-2{right:2%}.criatura-6{right:42%}}
 @media(prefers-reduced-motion:reduce){.criatura{animation:none!important}}
+
+
+/* Ajustes de texto y sorpresa al abrir la invitación */
+.portada-marco{text-align:center;margin-inline:auto}
+.portada-marco .sobretitulo,.portada-marco .escuela-mini,.portada-marco h1,.portada-marco .separador,.portada-marco .portada-copy,.portada-marco .nota-tocar{text-align:center;width:100%;margin-left:auto;margin-right:auto}
+.portada-copy{max-width:520px}
+.boton-brillo{display:block;max-width:100%;margin:0 auto;line-height:1.35;white-space:normal;text-wrap:balance}
+.boton-brillo:disabled{opacity:.9;cursor:default}
+.encabezado,.titulo-evento,.frase{text-align:center}
+.lluvia-espeluznante{position:fixed;inset:0;z-index:50;overflow:hidden;pointer-events:none}
+.pieza-voladora{position:absolute;top:-12vh;display:block;opacity:0;filter:drop-shadow(0 0 9px #ff8b35);animation:piezaDespegue var(--dur,2s) cubic-bezier(.2,.7,.2,1) var(--delay,0s) both}
+@keyframes piezaDespegue{0%{transform:translate3d(0,-10vh,0) rotate(0) scale(.3);opacity:0}12%{opacity:1}55%{transform:translate3d(var(--dx),52vh,0) rotate(calc(var(--rot)*.55)) scale(1.2);opacity:1}100%{transform:translate3d(calc(var(--dx)*1.35),115vh,0) rotate(var(--rot)) scale(.65);opacity:0}}
+@media(max-width:420px){.portada{padding-left:12px;padding-right:12px}.portada-marco{padding-left:15px;padding-right:15px}.boton-brillo{padding:13px 18px;font-size:.95rem}.sobretitulo{letter-spacing:.12em}}
