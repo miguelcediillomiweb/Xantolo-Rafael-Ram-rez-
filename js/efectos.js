@@ -36,10 +36,12 @@
   let cargandoYT = false;
   let cerrandoVideo = false;
   let videoTerminado = false;
+  let temporizadorFinVideo = null;
 
   function efectoTeleAntigua() {
     if (cerrandoVideo) return;
     cerrandoVideo = true;
+    if (temporizadorFinVideo) { clearTimeout(temporizadorFinVideo); temporizadorFinVideo = null; }
     try { if (reproductorYT && reproductorYT.stopVideo) reproductorYT.stopVideo(); } catch (_) {}
     const efecto = document.createElement("div");
     efecto.className = "apagado-tele";
@@ -74,12 +76,19 @@
       },
       events: {
         onReady: event => {
-          // El clic del ataúd inicia el reproductor; no crear ni arrancar otro player.
-          try { event.target.playVideo(); } catch (_) {}
+          // Reproducción única: temporizador de respaldo por si YouTube no emite ENDED.
+          try {
+            const duracion = event.target.getDuration();
+            if (duracion > 0) temporizadorFinVideo = window.setTimeout(() => {
+              if (!videoTerminado && modal.classList.contains("abierto")) { videoTerminado = true; efectoTeleAntigua(); }
+            }, (duracion + 2) * 1000);
+            event.target.playVideo();
+          } catch (_) {}
         },
         onStateChange: event => {
           if (event.data === YT.PlayerState.ENDED && !videoTerminado) {
             videoTerminado = true;
+            if (temporizadorFinVideo) { clearTimeout(temporizadorFinVideo); temporizadorFinVideo = null; }
             efectoTeleAntigua();
           }
         },
@@ -123,6 +132,7 @@
   function abrirVideoAtaud() {
     if (modal.classList.contains("abierto") || cerrandoVideo) return;
     videoTerminado = false;
+    if (temporizadorFinVideo) { clearTimeout(temporizadorFinVideo); temporizadorFinVideo = null; }
     contenedorVideo.innerHTML = '<div id="reproductorAtaud" class="reproductor-vertical"></div>';
     modal.classList.add("abierto");
     modal.setAttribute("aria-hidden", "false");
@@ -193,6 +203,6 @@
   $("abrirInvitacion").addEventListener("click", () => { window.setTimeout(iniciarAranaColgante, 850); });
   const canvas=$("chispas"),ctx=canvas.getContext("2d");let w=0,h=0,particles=[];
   function resize(){const dpr=Math.min(window.devicePixelRatio||1,2);w=window.innerWidth;h=window.innerHeight;canvas.width=Math.floor(w*dpr);canvas.height=Math.floor(h*dpr);canvas.style.width=w+"px";canvas.style.height=h+"px";ctx.setTransform(dpr,0,0,dpr,0,0);particles=Array.from({length:Math.min(75,Math.floor(w/8))},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+.5,vy:Math.random()*.55+.12,vx:(Math.random()-.5)*.25,a:Math.random()*.7+.2,hue:[35,285,325,170][Math.floor(Math.random()*4)]}))}
-  let last=0;function draw(t){if(t-last>32){last=t;ctx.clearRect(0,0,w,h);for(const p of particles){p.y-=p.vy;p.x+=p.vx;if(p.y<-5){p.y=h+5;p.x=Math.random()*w}if(p.x<-5)p.x=w+5;if(p.x>w+5)p.x=-5;ctx.globalAlpha=p.a*(.6+.4*Math.sin(t/700+p.x));ctx.fillStyle=`hsl(${p.hue} 100% 68%)`;ctx.shadowBlur=10;ctx.shadowColor=ctx.fillStyle;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1;ctx.shadowBlur=0}requestAnimationFrame(draw)}
+  let last=0;function draw(t){if(t-last>32){last=t;ctx.clearRect(0,0,w,h);for(const p of particles){p.y-=p.vy;p.x+=p.vx;if(p.y<-5){p.y=h+5;p.x=Math.random()*w}if(p.x<-5)p.x=w+5;if(p.x>w+5)p.x=-5;ctx.globalAlpha=p.a*(.6+.4*Math.sin(t/700+p.x));ctx.fillStyle=p.hue===0?`rgba(255,255,255,${p.a})`:`hsl(${p.hue} 100% 68%)`;ctx.shadowBlur=10;ctx.shadowColor=ctx.fillStyle;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1;ctx.shadowBlur=0}requestAnimationFrame(draw)}
   window.addEventListener("resize",resize,{passive:true});resize();requestAnimationFrame(draw);
 })();
