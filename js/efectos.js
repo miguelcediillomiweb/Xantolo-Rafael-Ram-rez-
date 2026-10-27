@@ -35,7 +35,7 @@
   let apiYTLista = false;
   let callbackYTAnterior = null;
   function cargarAPIYouTube() {
-    if (window.YT && window.YT.Player) { apiYTLista = true; crearReproductorYT(); return; }
+    if (window.YT && window.YT.Player) { apiYTLista = true; return; }
     if (!document.querySelector('script[data-youtube-iframe-api]')) {
       const tag = document.createElement("script");
       tag.src = "https://www.youtube.com/iframe_api";
