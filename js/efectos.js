@@ -173,6 +173,7 @@
     if (window.YT && window.YT.Player) {
       apiYTLista = true;
       crearReproductorYT();
+      crearReproductorMusica();
       return;
     }
     if (cargandoYT) return;
