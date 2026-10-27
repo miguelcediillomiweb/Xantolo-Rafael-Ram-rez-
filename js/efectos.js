@@ -44,50 +44,60 @@
   $("cerrarVideo").addEventListener("click",cerrarVideo); modal.addEventListener("click",e=>{if(e.target===modal)cerrarVideo()}); document.addEventListener("keydown",e=>{if(e.key==="Escape"&&modal.classList.contains("abierto"))cerrarVideo()});
   const style=document.createElement("style"); style.textContent='.sin-video{height:100%;min-height:180px;display:grid;place-content:center;padding:20px;color:#fff0ce;text-align:center;background:radial-gradient(circle,#35164d,#050208)}.sin-video p{margin:6px}.sin-video code{color:#ffd36b;overflow-wrap:anywhere}'; document.head.appendChild(style);
 
-  // La araña comienza únicamente cuando se abre la invitación.
+  // La araña se crea solo después de abrir la invitación; nunca aparece en la portada.
   let aranaIniciada = false;
-  function iniciarAranaColgante(){
+  function iniciarAranaColgante() {
     if (aranaIniciada) return;
     aranaIniciada = true;
-    const hilo=document.createElement("div");
-    hilo.className="arana-hilo";
-    hilo.setAttribute("aria-hidden","true");
-    const araña=document.createElement("img");
-    araña.className="arana-colgante";
-    araña.src="araña%20colgante.webp";
-    araña.alt="";
-    araña.setAttribute("aria-hidden","true");
-    araña.decoding="async";
-    araña.addEventListener("error",()=>{
-      // Si falta el archivo de imagen, mostrar una araña visible como respaldo.
-      const respaldo=document.createElement("span");
-      respaldo.className="arana-respaldo";
-      respaldo.textContent="🕷️";
-      respaldo.setAttribute("aria-hidden","true");
-      respaldo.style.left=araña.style.left;
-      respaldo.style.setProperty("--arana-duracion",araña.style.getPropertyValue("--arana-duracion")||"22s");
+
+    const hilo = document.createElement("div");
+    hilo.className = "arana-hilo";
+    hilo.setAttribute("aria-hidden", "true");
+
+    const araña = document.createElement("img");
+    araña.className = "arana-colgante";
+    araña.src = "./ara%C3%B1a%20colgante.webp";
+    araña.alt = "";
+    araña.setAttribute("aria-hidden", "true");
+    araña.decoding = "async";
+
+    araña.addEventListener("error", () => {
+      const respaldo = document.createElement("span");
+      respaldo.className = "arana-respaldo";
+      respaldo.textContent = "🕷️";
+      respaldo.setAttribute("aria-hidden", "true");
       araña.replaceWith(respaldo);
-      window.setTimeout(()=>{respaldo.remove();},30000);
-      console.warn("No se encontró araña colgante.webp; se muestra una araña de respaldo.");
-    },{once:true});
-    document.body.append(hilo,araña);
-    function bajar(){
-      const ancho=Math.max(document.documentElement.clientWidth,window.innerWidth||0);
-      const margen=Math.min(48,ancho*.08);
-      const x=margen+Math.random()*Math.max(1,ancho-margen*2);
-      const duracion=18+Math.random()*7;
-      hilo.style.left=x+"px";
-      araña.style.setProperty("--arana-x",x+"px");
-      araña.style.setProperty("--arana-duracion",duracion+"s");\n      hilo.style.setProperty("--arana-x",x+"px");
-      araña.style.animation="none";
-      araña.offsetHeight;
-      araña.style.animation="";
-      window.setTimeout(bajar,duracion*1000+1800);
+    }, { once: true });
+
+    document.body.append(hilo, araña);
+
+    function bajar() {
+      if (!document.getElementById("invitacion") || document.getElementById("invitacion").hidden) {
+        hilo.remove();
+        araña.remove();
+        aranaIniciada = false;
+        return;
+      }
+      const ancho = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+      const margen = Math.min(48, ancho * 0.08);
+      const x = margen + Math.random() * Math.max(1, ancho - margen * 2);
+      const duracion = 18 + Math.random() * 7;
+      hilo.style.left = x + "px";
+      hilo.style.setProperty("--arana-x", x + "px");
+      araña.style.left = x + "px";
+      araña.style.setProperty("--arana-x", x + "px");
+      araña.style.setProperty("--arana-duracion", duracion + "s");
+      hilo.style.height = "100vh";
+      araña.style.animation = "none";
+      void araña.offsetHeight;
+      araña.style.animation = "";
+      window.setTimeout(bajar, duracion * 1000 + 1800);
     }
     bajar();
   }
-  $(\"abrirInvitacion\").addEventListener("click", () => {
-    window.setTimeout(iniciarAranaColgante, 900);
+  // Se engancha al botón, pero se inicia cuando la portada ya se ocultó.
+  $("abrirInvitacion").addEventListener("click", () => {
+    window.setTimeout(iniciarAranaColgante, 850);
   });
   const canvas=$("chispas"),ctx=canvas.getContext("2d");let w=0,h=0,particles=[];
   function resize(){const dpr=Math.min(window.devicePixelRatio||1,2);w=window.innerWidth;h=window.innerHeight;canvas.width=Math.floor(w*dpr);canvas.height=Math.floor(h*dpr);canvas.style.width=w+"px";canvas.style.height=h+"px";ctx.setTransform(dpr,0,0,dpr,0,0);particles=Array.from({length:Math.min(75,Math.floor(w/8))},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+.5,vy:Math.random()*.55+.12,vx:(Math.random()-.5)*.25,a:Math.random()*.7+.2,hue:[35,285,325,170][Math.floor(Math.random()*4)]}))}
