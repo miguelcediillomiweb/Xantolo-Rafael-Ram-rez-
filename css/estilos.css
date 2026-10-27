@@ -246,3 +246,16 @@
 @keyframes fantasmaSalidaFlota{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-7px) rotate(5deg)}}
 @keyframes fantasmaSeVa{0%{transform:translate(0,0) scale(1);opacity:1}45%{transform:translate(24px,-24px) scale(1.15);opacity:1}100%{transform:translate(115vw,-70vh) scale(.25) rotate(28deg);opacity:0}}
 @media(prefers-reduced-motion:reduce){.fantasma-salida,.boton-salida.saliendo .fantasma-salida{animation:none!important}}
+
+
+/* Pantalla final de despedida */
+.pantalla-salida[hidden]{display:none!important}
+.pantalla-salida{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;overflow:hidden;padding:24px;background:radial-gradient(ellipse at center,#49245f 0%,#21142f 58%,#100d20 100%);color:#fff;text-align:center}
+.salida-contenido{position:relative;z-index:2;max-width:600px;padding:28px 18px;border:1px solid #f3d18b;border-radius:28px;background:#1c1229d9;box-shadow:0 0 28px #b58aff55, inset 0 0 22px #ffe5a622;animation:salidaContenidoAparece .7s ease-out both}
+.salida-contenido h2{margin:12px 0;color:#ffe39d;font-size:clamp(2rem,8vw,3.4rem);text-shadow:0 0 15px #f4a9ff88}
+.salida-contenido p{margin:10px 0;font-size:clamp(1.4rem,5vw,2rem);font-weight:900}
+.salida-guirnalda{font-size:1.4rem;letter-spacing:.25rem}.salida-adornos{margin-top:20px;font-size:clamp(1.5rem,6vw,2.2rem)}
+.fantasma-volador{position:absolute;bottom:-70px;left:var(--fantasma-left);font-size:var(--fantasma-size);opacity:0;pointer-events:none;filter:drop-shadow(0 0 9px #bdf8ff);animation:fantasmasHaciaArriba var(--fantasma-duracion) ease-out var(--fantasma-retardo) forwards}
+@keyframes fantasmasHaciaArriba{0%{transform:translate3d(0,0,0) rotate(-12deg) scale(.65);opacity:0}12%{opacity:1}75%{opacity:.9}100%{transform:translate3d(var(--fantasma-dx),-125vh,0) rotate(var(--fantasma-giro)) scale(1.15);opacity:0}}
+@keyframes salidaContenidoAparece{from{opacity:0;transform:scale(.85) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@media(prefers-reduced-motion:reduce){.fantasma-volador{animation-duration:2s!important;animation-delay:0s!important}}
