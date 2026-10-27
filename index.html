@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#160b2b"><meta name="description" content="Invitación de Halloween y Día de Muertos de la Escuela Primaria Rafael Ramírez.">
+<title>Xantolo · Escuela Primaria Rafael Ramírez</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<canvas id="chispas" aria-hidden="true"></canvas><div class="luna" aria-hidden="true"></div><div class="murcielagos" aria-hidden="true">🦇　 🦇　　🦇</div>
+<div class="faroles" aria-hidden="true"><span>🏮</span><span>🕯️</span><span>🏮</span><span>🕯️</span><span>🏮</span></div>
+<div class="guirnalda" aria-hidden="true"><span>✦</span><span>✿</span><span>☠</span><span>✿</span><span>✦</span><span>☠</span><span>✿</span><span>✦</span><span>☠</span></div>
+<section class="portada" id="portada"><div class="portada-marco">
+<p class="sobretitulo">Una noche mágica te espera</p><div class="calaveras-laterales" aria-hidden="true"><span>💀</span><span>🎃</span></div><div class="calavera" aria-hidden="true">💀</div>
+<p class="escuela-mini">ESCUELA PRIMARIA</p><h1>Rafael Ramírez</h1><div class="separador"><span>✦</span> ✿ <span>✦</span></div>
+<p class="portada-copy">Hay una invitación<br>esperándote...</p><button class="boton-brillo" id="abrirInvitacion">🎃 Abrir invitación</button><p class="nota-tocar">Toca para entrar si te atreves</p>
+</div></section>
+<main class="contenido" id="invitacion" hidden>
+<header class="encabezado"><p class="etiqueta">ESCUELA PRIMARIA RAFAEL RAMÍREZ</p><p class="invitacion-a">Te invita a celebrar este</p><h2>Viernes <span>30</span></h2><p class="mes">OCTUBRE · 2026</p><div class="titulo-evento">HALLOWEEN <i>y</i> <strong>DÍA DE MUERTOS</strong></div><p class="frase">Una celebración llena de magia, tradición y diversión.</p></header>
+<section class="escena"><div class="decoracion decoracion-izq" aria-hidden="true">🎃<br>🌼<br>🕯️</div><div class="decoracion decoracion-der" aria-hidden="true">🕯️<br>🌼<br>🎃</div>
+<button class="ataud" id="abrirVideo" aria-label="Abrir ataúd y reproducir video"><span class="ataud-aura"></span>
+<svg viewBox="0 0 220 300" role="img" aria-label="Ataúd decorado"><defs><linearGradient id="madera" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6b34d"/><stop offset=".22" stop-color="#6d351d"/><stop offset=".55" stop-color="#2a1238"/><stop offset=".78" stop-color="#8b431e"/><stop offset="1" stop-color="#f6c66b"/></linearGradient><linearGradient id="interior" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7b278f"/><stop offset="1" stop-color="#230d38"/></linearGradient></defs>
+<path d="M68 8 H152 L208 78 L180 242 L110 292 L40 242 L12 78 Z" fill="url(#madera)" stroke="#ffda83" stroke-width="4"/><path d="M76 22 H144 L190 83 L164 226 L110 269 L56 226 L30 83 Z" fill="url(#interior)" stroke="#e6a64d" stroke-width="4"/><path d="M84 40 H136 L172 88 L149 211 L110 242 L71 211 L48 88 Z" fill="none" stroke="#ffcf68" stroke-width="2" stroke-dasharray="5 5"/><path d="M110 73 L121 98 L145 102 L127 119 L132 144 L110 132 L88 144 L93 119 L75 102 L99 98 Z" fill="#ffcf68"/><path d="M110 155 v52 M92 174 h36" stroke="#ffcf68" stroke-width="7" stroke-linecap="round"/><circle cx="28" cy="82" r="4" fill="#fff1b9"/><circle cx="192" cy="82" r="4" fill="#fff1b9"/><circle cx="49" cy="226" r="4" fill="#fff1b9"/><circle cx="171" cy="226" r="4" fill="#fff1b9"/></svg>
+<span class="ataud-leyenda">Toca el ataúd para descubrir el video</span><span class="dedo" aria-hidden="true">👆</span></button><p class="video-ayuda">Un secreto espeluznante aguarda en su interior…</p></section>
+<section class="datos"><div class="dato"><span>📅</span><div><small>FECHA</small><strong>Viernes 30 de octubre de 2026</strong></div></div><div class="dato"><span>🕘</span><div><small>HORA</small><strong id="horaEvento">Horario por confirmar</strong></div></div><div class="dato"><span>📍</span><div><small>LUGAR</small><strong id="lugarEvento">Escuela Primaria Rafael Ramírez</strong></div></div></section>
+<div class="papel-picado-abajo" aria-hidden="true">✿　☠　✦　✿　☠　✦　✿　☠　✦</div><footer><span>🌼</span> ¡Te esperamos! <span>🌼</span><small>Tradición, alegría y un poquito de misterio.</small></footer>
+</main>
+<div class="modal-video" id="modalVideo" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Video de la invitación"><div class="modal-caja"><button class="cerrar-video" id="cerrarVideo" aria-label="Cerrar video">✕</button><p class="modal-titulo">🔮 El secreto del ataúd 🔮</p><div class="video-marco" id="contenedorVideo"></div><p class="modal-pie">¡Que comience la magia!</p></div></div>
+<script src="js/config.js"></script><script src="js/efectos.js"></script>
+</body></html>
