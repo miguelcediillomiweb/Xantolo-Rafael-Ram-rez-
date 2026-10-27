@@ -96,3 +96,6 @@
 /* Máscara discreta en los extremos para disimular parte de la interfaz del reproductor */
 .video-marco:after{content:"";position:absolute;inset:0 0 auto;height:clamp(18px,4vh,38px);z-index:4;pointer-events:none;background:linear-gradient(#000b,transparent)}
 .video-marco{position:relative}
+
+/* Controles del popup del video */
+.cerrar-video{position:fixed;z-index:150;top:max(12px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));width:44px;height:44px;border:1px solid #fff9;border-radius:50%;background:#180d26eF;color:#fff;font-size:25px;line-height:1;box-shadow:0 0 18px #000b;display:grid;place-items:center}.cerrar-video:active{transform:scale(.94)}
