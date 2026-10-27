@@ -92,11 +92,21 @@
             efectoTeleAntigua();
           }
         },
-        onError: () => {
-          // Evita dejar una ventana negra abierta si YouTube no permite reproducir el video.
-          if (!videoTerminado) {
-            videoTerminado = true;
-            efectoTeleAntigua();
+        onError: event => {
+          // No cerrar el ataúd automáticamente: un error de YouTube no debe
+          // disparar el efecto de apagado antes de que el usuario vea el reproductor.
+          console.warn("YouTube no pudo reproducir el video. Código:", event.data);
+          const aviso = document.getElementById("avisoVideoError");
+          if (aviso) {
+            aviso.hidden = false;
+            aviso.textContent = "YouTube no pudo cargar este video (código " + event.data + "). Comprueba que el video permita inserción y que haya conexión.";
+          } else {
+            const mensaje = document.createElement("p");
+            mensaje.id = "avisoVideoError";
+            mensaje.className = "aviso-video-error";
+            mensaje.setAttribute("role", "status");
+            mensaje.textContent = "YouTube no pudo cargar este video (código " + event.data + "). Comprueba que el video permita inserción y que haya conexión.";
+            contenedorVideo.appendChild(mensaje);
           }
         }
       }
@@ -133,7 +143,7 @@
     if (modal.classList.contains("abierto") || cerrandoVideo) return;
     videoTerminado = false;
     if (temporizadorFinVideo) { clearTimeout(temporizadorFinVideo); temporizadorFinVideo = null; }
-    contenedorVideo.innerHTML = '<div id="reproductorAtaud" class="reproductor-vertical"></div>';
+    contenedorVideo.innerHTML = '<div id="reproductorAtaud" class="reproductor-vertical"></div><p id="avisoVideoError" class="aviso-video-error" hidden></p>';
     modal.classList.add("abierto");
     modal.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
