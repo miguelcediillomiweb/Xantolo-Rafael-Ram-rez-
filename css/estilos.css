@@ -119,3 +119,13 @@
   .contenido{padding:20px 18px 28px}
   .encabezado{padding:0 6px 12px}
 }
+
+
+/* El video ocupa toda la pantalla; el fondo del sitio queda visible solo alrededor del popup */
+.modal-video{padding:0!important;background:rgba(4,2,12,.34)!important}
+.modal-caja{width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;padding:0!important;border:0!important;border-radius:0!important;background:#000!important;box-shadow:none!important;overflow:hidden!important}
+.video-marco{width:100%!important;height:100%!important;border:0!important;border-radius:0!important;overflow:hidden!important}
+.reproductor-vertical{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;aspect-ratio:auto!important;background:#000!important}
+.reproductor-vertical iframe,.video-marco iframe{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;border:0!important}
+.cerrar-video{z-index:200!important}
+@media(max-width:600px){.modal-video{padding:0!important}.modal-caja{width:100vw!important;height:100dvh!important}.reproductor-vertical{width:100%!important;height:100%!important}}
