@@ -232,4 +232,4 @@
 /* Control discreto de música tradicional de Xantolo */
 .control-musica{position:fixed;right:12px;bottom:14px;z-index:1200;border:1px solid #f3cc7a;border-radius:999px;padding:10px 14px;background:rgba(29,12,39,.94);color:#fff1c9;font:800 .88rem Nunito, sans-serif;box-shadow:0 0 16px rgba(255,185,69,.42);cursor:pointer}
 .control-musica[hidden]{display:none!important}
-.reproductor-musica{position:fixed;width:1px;height:1px;left:-10px;bottom:0;overflow:hidden;opacity:.01;pointer-events:none}.reproductor-musica iframe{width:1px;height:1px;border:0}
+.reproductor-musica{position:fixed;width:200px;height:200px;left:-250px;top:-250px;overflow:hidden;opacity:0;pointer-events:none;z-index:-1}.reproductor-musica iframe{width:200px!important;height:200px!important;border:0;pointer-events:none}
