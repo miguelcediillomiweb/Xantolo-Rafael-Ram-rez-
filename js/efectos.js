@@ -137,6 +137,26 @@
   }
 
   const musicaLocal = $("musicaFondo");
+  // Botón de salida: detener el audio y dejar una despedida visible.
+  const botonSalir = $("salirInvitacion");
+  const mensajeSalida = $("mensajeSalida");
+  if (botonSalir) {
+    botonSalir.addEventListener("click", () => {
+      if (musicaLocal) {
+        try { musicaLocal.pause(); musicaLocal.currentTime = 0; } catch (_) {}
+      }
+      // Si el video del ataúd está abierto, detenerlo y cerrar el modal con su efecto habitual.
+      if (modal && modal.classList.contains("abierto")) efectoTeleAntigua();
+      botonSalir.classList.add("saliendo");
+      botonSalir.disabled = true;
+      if (mensajeSalida) mensajeSalida.hidden = false;
+      window.setTimeout(() => {
+        if (invitacion) invitacion.classList.add("invitacion-finalizada");
+        window.scrollTo({top:0,behavior:"smooth"});
+      }, 1150);
+    });
+  }
+
   function iniciarMusicaLocal() {
     if (!musicaLocal) return;
     musicaLocal.volume = 0.35;
