@@ -58,7 +58,18 @@
     araña.alt="";
     araña.setAttribute("aria-hidden","true");
     araña.decoding="async";
-    araña.addEventListener("error",()=>{hilo.remove();araña.remove();console.warn("No se encontró araña colgante.webp en la raíz del repositorio.");},{once:true});
+    araña.addEventListener("error",()=>{
+      // Si falta el archivo de imagen, mostrar una araña visible como respaldo.
+      const respaldo=document.createElement("span");
+      respaldo.className="arana-respaldo";
+      respaldo.textContent="🕷️";
+      respaldo.setAttribute("aria-hidden","true");
+      respaldo.style.left=araña.style.left;
+      respaldo.style.setProperty("--arana-duracion",araña.style.getPropertyValue("--arana-duracion")||"22s");
+      araña.replaceWith(respaldo);
+      window.setTimeout(()=>{respaldo.remove();},30000);
+      console.warn("No se encontró araña colgante.webp; se muestra una araña de respaldo.");
+    },{once:true});
     document.body.append(hilo,araña);
     function bajar(){
       const ancho=Math.max(document.documentElement.clientWidth,window.innerWidth||0);
@@ -67,7 +78,7 @@
       const duracion=18+Math.random()*7;
       hilo.style.left=x+"px";
       araña.style.setProperty("--arana-x",x+"px");
-      araña.style.setProperty("--arana-duracion",duracion+"s");
+      araña.style.setProperty("--arana-duracion",duracion+"s");\n      hilo.style.setProperty("--arana-x",x+"px");
       araña.style.animation="none";
       araña.offsetHeight;
       araña.style.animation="";
