@@ -102,3 +102,20 @@
 
 /* Luna ampliada y estrellas nocturnas; video en ventana emergente sobre la web */
 @media(max-width:600px){.luna{right:4%;top:62px;width:clamp(100px,27vw,150px);opacity:.82}.modal-video{padding:12px}.modal-caja{width:min(94vw,500px);height:min(82dvh,820px);padding:6px;border-radius:18px}.reproductor-vertical{width:100%;height:100%;max-height:100%}.cerrar-video{top:max(8px,env(safe-area-inset-top));right:max(8px,env(safe-area-inset-right));}}
+
+
+/* Reducir el espacio vacío antes de los primeros textos, especialmente en celular */
+.portada{place-items:start center;padding:66px 16px 24px;min-height:100svh}
+.portada-marco{padding:clamp(20px,4vw,38px) 20px}
+.contenido{padding-top:30px}
+.encabezado{padding:0 10px 16px}
+.encabezado h2{margin:2px 0}
+.titulo-tradicion{margin:10px auto 8px}
+@media(max-width:650px){
+  .portada{padding:58px 12px 20px}
+  .portada-marco{padding:20px 15px}
+  .calavera{font-size:clamp(48px,10vw,70px);margin-top:5px}
+  .portada-marco:after{margin-top:10px}
+  .contenido{padding:20px 18px 28px}
+  .encabezado{padding:0 6px 12px}
+}
