@@ -131,6 +131,9 @@
     cargarAPIYouTube();
   }
   $("abrirVideo").addEventListener("click", abrirVideoAtaud);
+  const cerrarVideoBtn = $("cerrarVideo");
+  if (cerrarVideoBtn) cerrarVideoBtn.addEventListener("click", efectoTeleAntigua);
+  modal.addEventListener("click", event => { if (event.target === modal) efectoTeleAntigua(); });
   // Araña pequeña que baja con un hilo corto unido a ella; sin raya blanca por toda la pantalla.
   let aranaIniciada = false;
   function iniciarAranaColgante() {
