@@ -8,9 +8,12 @@
 .papel-nombre span:after{content:"✿";position:absolute;bottom:6px;left:0;right:0;text-align:center;font-family:serif;font-size:clamp(8px,1.2vw,13px);color:#fff4d7;opacity:.9}
 .papel-nombre i{display:block;flex:0 0 clamp(7px,1vw,13px);height:2px}
 @media(max-width:480px){.cenefa-nombre{padding:8px 3px 10px}.papel-nombre{gap:2px}.papel-nombre span{height:clamp(37px,10vw,48px);font-size:clamp(.78rem,4.4vw,1.15rem);padding-bottom:5px}.papel-nombre span:after{font-size:8px;bottom:4px}.papel-nombre i{flex-basis:4px}}
-/* Cenefa vertical de adornos: ilustraciones simbólicas, no fotografías completas */
-.orilla-muertos{position:fixed;inset:0;z-index:1;display:flex;justify-content:space-between;pointer-events:none;overflow:hidden;padding:0 clamp(2px,.6vw,8px)}
-.orilla-columna{width:clamp(32px,4.6vw,64px);height:100%;display:flex;flex-direction:column;justify-content:space-around;gap:8px;overflow:hidden}
-.orilla-columna img{display:block;width:100%;height:18vh;max-height:150px;min-height:65px;object-fit:cover;border:0;border-radius:50% 50% 12px 12px;box-shadow:0 0 10px #ff8b2b66;opacity:.22;filter:saturate(1.2)}
-@media(max-width:760px){.orilla-columna{width:clamp(18px,4.5vw,30px);gap:5px}.orilla-columna img{height:15vh;min-height:50px;max-height:100px;opacity:.18}}
-@media(max-width:420px){.orilla-columna{width:15px}.orilla-columna img{height:13vh;min-height:42px;opacity:.14}}
+/* Adornos de Día de Muertos a lo largo de las dos orillas */
+.orilla-muertos{position:fixed;inset:0;z-index:1;display:flex;justify-content:space-between;pointer-events:none;overflow:hidden;padding:0 clamp(2px,.8vw,12px)}
+.orilla-columna{width:clamp(30px,5vw,66px);height:100%;display:flex;flex-direction:column;align-items:center;justify-content:space-around;gap:4px;overflow:hidden}
+.orilla-columna span{display:grid;place-items:center;width:100%;font-size:clamp(22px,3.5vw,43px);line-height:1.2;filter:drop-shadow(0 0 9px #ff9a3d88) drop-shadow(0 3px 4px #0009);animation:flotaAdorno 4s ease-in-out infinite alternate}
+.orilla-columna span:nth-child(even){animation-delay:-1.8s}
+.orilla-columna span:nth-child(3n){font-size:clamp(19px,3vw,35px)}
+@keyframes flotaAdorno{from{transform:translateY(-4px) rotate(-4deg)}to{transform:translateY(5px) rotate(4deg)}}
+@media(max-width:760px){.orilla-muertos{padding:0 1px}.orilla-columna{width:clamp(20px,5vw,31px)}.orilla-columna span{font-size:clamp(15px,4vw,25px);filter:drop-shadow(0 0 5px #ff9a3d77)}.orilla-columna span:nth-child(3n){font-size:clamp(14px,3.6vw,22px)}}
+@media(max-width:420px){.orilla-columna{width:18px}.orilla-columna span{font-size:16px}.orilla-columna span:nth-child(3n){font-size:14px}}
