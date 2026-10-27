@@ -179,3 +179,33 @@
 @keyframes sorpresaEntrada{from{letter-spacing:.22em;opacity:.3}to{letter-spacing:normal;opacity:1}}
 @media(max-width:520px){.sorpresa-recre{margin:25px 2px 30px;padding:28px 14px;border-radius:20px 7px}.sorpresa-nombre{font-size:clamp(1.35rem,6vw,1.9rem);padding:0 3px}.sorpresa-tipo{padding:8px 12px}}
 @media(prefers-reduced-motion:reduce){.sorpresa-recre{opacity:1;transform:none;transition:none}.sorpresa-particulas,.sorpresa-titulo,.sorpresa-tipo,.sorpresa-pies{animation:none!important}}
+
+
+/* Ajustes finales para móviles: lectura más cómoda y portada menos alta. */
+@media(max-width:600px){
+  body{font-size:17px}
+  .portada{min-height:100svh;padding:62px 14px 24px}
+  .portada-marco{padding:clamp(20px,5vw,30px) clamp(14px,4vw,24px);}
+  .sobretitulo{font-size:clamp(1.05rem,4.8vw,1.35rem)}
+  .escuela-mini{font-size:clamp(.95rem,4vw,1.1rem)}
+  .portada h1{font-size:clamp(2.25rem,10vw,3.5rem);line-height:1.12}
+  .portada-copy{font-size:clamp(1.05rem,4.6vw,1.35rem);line-height:1.45}
+  .nota-tocar{font-size:1rem;line-height:1.4}
+  .boton-brillo{font-size:clamp(1rem,4.2vw,1.2rem);padding:14px 17px}
+  .luna{top:38px;width:clamp(82px,23vw,120px);right:3%;opacity:.48}
+  .cielo-terror{top:28px;height:clamp(105px,29vw,155px)}
+  .murcielagos{top:10%;font-size:clamp(20px,6vw,30px)}
+  .encabezado{padding-top:clamp(22px,5vw,36px)}
+  .encabezado h2{font-size:clamp(2rem,8vw,3rem)}
+  .titulo-tradicion{font-size:clamp(1.35rem,5.6vw,1.8rem);line-height:1.3}
+  .frase{font-size:1.08rem;line-height:1.5}
+  .lista-programa li strong,.lista-programa li div span{font-size:1.02rem;line-height:1.45}
+  .dato strong{font-size:1.05rem;line-height:1.45}
+}
+/* Los emojis decorativos tienen movimiento visible pero discreto. */
+.programa-ceja,.programa-adornos,.ofrenda-elementos,.separador,.decoracion{animation:adornoMovil 2.8s ease-in-out infinite alternate}
+.programa-emoji{animation:emojiPrograma 1.8s ease-in-out infinite alternate}
+.lista-programa li:nth-child(odd) .programa-emoji{animation-delay:-.8s}
+.criatura{animation-duration:3.6s}
+@keyframes adornoMovil{from{transform:translateY(0) rotate(-2deg)}to{transform:translateY(-5px) rotate(2deg)}}
+@media(prefers-reduced-motion:reduce){.programa-ceja,.programa-adornos,.ofrenda-elementos,.separador,.decoracion,.programa-emoji,.criatura{animation:none!important}}
