@@ -157,3 +157,25 @@
 @keyframes emojiPrograma{from{transform:translateY(0) rotate(-5deg)}to{transform:translateY(-4px) rotate(5deg)}}
 @media(max-width:420px){.lista-programa{gap:8px}.lista-programa li{gap:9px;padding:11px 9px}.programa-emoji{flex-basis:36px;width:36px;height:36px;font-size:1.35rem}}
 @media(prefers-reduced-motion:reduce){.lista-programa li{opacity:1;animation:none}.programa-emoji{animation:none}}
+
+
+/* Sorpresa final: revelación luminosa al llegar con el desplazamiento */
+.sorpresa-recre{position:relative;isolation:isolate;overflow:hidden;width:min(100%,860px);margin:clamp(28px,7vw,68px) auto 38px;padding:clamp(28px,6vw,54px) clamp(15px,4vw,38px);border:2px solid #ffcf63;border-radius:28px 8px 28px 8px;background:radial-gradient(ellipse at 50% 0%,#74258d 0,transparent 56%),linear-gradient(145deg,#190b2b,#35113d 52%,#130921);box-shadow:0 0 0 6px #d6248a22,0 0 35px #f42e9a33,inset 0 0 35px #ffbd4d12;text-align:center;opacity:0;transform:translateY(55px) scale(.96);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.75,.25,1)}
+.sorpresa-recre:before{content:"";position:absolute;inset:10px;border:1px dashed #ffd36b99;border-radius:20px 5px 20px 5px;pointer-events:none;z-index:-1}
+.sorpresa-recre.sorpresa-visible{opacity:1;transform:translateY(0) scale(1)}
+.sorpresa-particulas{font-size:clamp(1.1rem,4vw,1.8rem);letter-spacing:.13em;filter:drop-shadow(0 0 10px #ffbd4d);animation:sorpresaFlota 2.6s ease-in-out infinite alternate}
+.sorpresa-ceja{margin:16px 0 8px;color:#8ff5e5;font-size:clamp(.85rem,2.8vw,1.1rem);font-weight:900;letter-spacing:.08em}
+.sorpresa-titulo{margin:8px 0 4px;font-family:"Chelsea Market",cursive;font-size:clamp(2.6rem,10vw,5.2rem);line-height:1.12;color:#fff0ce;text-shadow:0 0 5px #fff,0 0 16px #ffbd4d,0 0 32px #f42e9a;animation:sorpresaBrillo 1.8s ease-in-out infinite alternate}
+.sorpresa-tipo{display:table;margin:12px auto 18px;padding:9px 19px;border:1px solid #35dfc5;border-radius:999px;background:linear-gradient(90deg,#124b53,#472052);color:#a7fff0;font-size:clamp(1rem,3.5vw,1.45rem);font-weight:900;box-shadow:0 0 18px #35dfc555;animation:sorpresaPulso 2s ease-in-out infinite}
+.sorpresa-separador{color:#ffcf63;font-size:1.5rem;letter-spacing:.25em}
+.sorpresa-nombre{max-width:660px;margin:18px auto 16px;font-family:"Chelsea Market",cursive;font-size:clamp(1.45rem,5.4vw,2.65rem);line-height:1.35;color:#ffd36b;text-wrap:balance;text-shadow:0 2px 0 #46123e,0 0 16px #ff6b2688}
+.sorpresa-grupo{margin:18px 0 8px;color:#fff0ce;font-size:clamp(1.1rem,4vw,1.6rem);font-weight:800;letter-spacing:.06em}
+.sorpresa-grupo strong{display:inline-block;margin-left:5px;color:#55e3cd;font-size:1.3em;text-shadow:0 0 13px #35dfc588}
+.sorpresa-pies{margin-top:20px;font-size:clamp(1.5rem,5vw,2.2rem);letter-spacing:.15em;animation:sorpresaFlota 2.2s ease-in-out infinite alternate-reverse}
+.sorpresa-recre.sorpresa-visible .sorpresa-titulo{animation:sorpresaBrillo 1.8s ease-in-out infinite alternate,sorpresaEntrada .8s cubic-bezier(.2,.8,.2,1) both}
+@keyframes sorpresaBrillo{from{filter:brightness(.9);transform:scale(.98);text-shadow:0 0 7px #ffbd4d,0 0 18px #f42e9a}to{filter:brightness(1.2);transform:scale(1.035);text-shadow:0 0 13px #fff,0 0 28px #ffbd4d,0 0 48px #f42e9a}}
+@keyframes sorpresaPulso{0%,100%{transform:scale(1);box-shadow:0 0 12px #35dfc533}50%{transform:scale(1.035);box-shadow:0 0 25px #35dfc588}}
+@keyframes sorpresaFlota{from{transform:translateY(0)}to{transform:translateY(-7px)}}
+@keyframes sorpresaEntrada{from{letter-spacing:.22em;opacity:.3}to{letter-spacing:normal;opacity:1}}
+@media(max-width:520px){.sorpresa-recre{margin:25px 2px 30px;padding:28px 14px;border-radius:20px 7px}.sorpresa-nombre{font-size:clamp(1.35rem,6vw,1.9rem);padding:0 3px}.sorpresa-tipo{padding:8px 12px}}
+@media(prefers-reduced-motion:reduce){.sorpresa-recre{opacity:1;transform:none;transition:none}.sorpresa-particulas,.sorpresa-titulo,.sorpresa-tipo,.sorpresa-pies{animation:none!important}}
