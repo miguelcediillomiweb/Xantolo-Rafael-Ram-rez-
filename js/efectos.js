@@ -137,21 +137,38 @@
   }
 
   const musicaLocal = $("musicaFondo");
-  // Botón de salida: detener el audio y dejar una despedida visible.
+  // Salida final: parar la música, lanzar fantasmitas y mostrar una pantalla de despedida.
   const botonSalir = $("salirInvitacion");
-  const mensajeSalida = $("mensajeSalida");
+  const pantallaSalida = $("pantallaSalida");
   if (botonSalir) {
     botonSalir.addEventListener("click", () => {
       if (musicaLocal) {
         try { musicaLocal.pause(); musicaLocal.currentTime = 0; } catch (_) {}
       }
-      // Si el video del ataúd está abierto, detenerlo y cerrar el modal con su efecto habitual.
+      if (reproductorYT && typeof reproductorYT.stopVideo === "function") {
+        try { reproductorYT.stopVideo(); } catch (_) {}
+      }
       if (modal && modal.classList.contains("abierto")) efectoTeleAntigua();
-      botonSalir.classList.add("saliendo");
       botonSalir.disabled = true;
-      if (mensajeSalida) mensajeSalida.hidden = false;
-      // Mantener visible la despedida en la parte inferior para que el visitante la lea.
-
+      botonSalir.classList.add("saliendo");
+      if (pantallaSalida) {
+        pantallaSalida.hidden = false;
+        const fantasmas = ["👻","👻","👻","👻","👻","👻","👻","👻","👻","👻","👻","👻","👻","👻","👻","👻","👻","👻","👻","👻","👻","👻","👻","👻"];
+        fantasmas.forEach((figura, i) => {
+          const fantasma = document.createElement("span");
+          fantasma.className = "fantasma-volador";
+          fantasma.setAttribute("aria-hidden", "true");
+          fantasma.textContent = figura;
+          fantasma.style.setProperty("--fantasma-left", (Math.random() * 100) + "vw");
+          fantasma.style.setProperty("--fantasma-size", (25 + Math.random() * 34) + "px");
+          fantasma.style.setProperty("--fantasma-duracion", (2.6 + Math.random() * 2.1) + "s");
+          fantasma.style.setProperty("--fantasma-retardo", (Math.random() * 1.2) + "s");
+          fantasma.style.setProperty("--fantasma-dx", ((Math.random() - .5) * 170) + "px");
+          fantasma.style.setProperty("--fantasma-giro", ((Math.random() - .5) * 70) + "deg");
+          pantallaSalida.appendChild(fantasma);
+          window.setTimeout(() => fantasma.remove(), 6500);
+        });
+      }
     });
   }
 
