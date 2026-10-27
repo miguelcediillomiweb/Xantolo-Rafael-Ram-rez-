@@ -133,7 +133,6 @@
   function abrirVideoAtaud() {
     if (modal.classList.contains("abierto") || cerrandoVideo) return;
     videoTerminado = false;
-    if (temporizadorFinVideo) { clearTimeout(temporizadorFinVideo); temporizadorFinVideo = null; }
     contenedorVideo.innerHTML = '<div id="reproductorAtaud" class="reproductor-vertical"></div><p id="avisoVideoError" class="aviso-video-error" hidden></p>';
     modal.classList.add("abierto");
     modal.setAttribute("aria-hidden", "false");
