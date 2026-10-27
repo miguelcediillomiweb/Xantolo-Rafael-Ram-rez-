@@ -82,19 +82,30 @@
             event.target.playVideo();
           } catch (_) {}
           if (vigilanciaFinVideo) clearInterval(vigilanciaFinVideo);
+          // Respaldo firme: cierra al llegar al final estimado aunque Shorts/iframe
+          // no emita ENDED o vuelva a empezar la reproducción.
+          const inicioReproduccion = Date.now();
           vigilanciaFinVideo = window.setInterval(() => {
             if (cerrandoVideo || videoTerminado || !reproductorYT) return;
             try {
-              const duracion = reproductorYT.getDuration();
-              const actual = reproductorYT.getCurrentTime();
+              const duracion = Number(reproductorYT.getDuration()) || 0;
+              const actual = Number(reproductorYT.getCurrentTime()) || 0;
               const estado = reproductorYT.getPlayerState();
-              if (duracion > 0 && actual >= duracion - 0.65 && estado !== YT.PlayerState.BUFFERING) {
+              const llegoAlFinal = duracion > 0 && actual >= duracion - 0.8;
+              const excedioDuracion = duracion > 0 && Date.now() - inicioReproduccion >= (duracion + 2.5) * 1000;
+              const excedioLimiteSeguro = Date.now() - inicioReproduccion >= 180000;
+              if (llegoAlFinal || excedioDuracion || excedioLimiteSeguro || estado === YT.PlayerState.ENDED) {
                 videoTerminado = true;
-                reproductorYT.pauseVideo();
+                try { reproductorYT.pauseVideo(); reproductorYT.seekTo(0, true); } catch (_) {}
                 efectoTeleAntigua();
               }
-            } catch (_) {}
-          }, 400);
+            } catch (_) {
+              if (Date.now() - inicioReproduccion >= 180000) {
+                videoTerminado = true;
+                efectoTeleAntigua();
+              }
+            }
+          }, 250);
         },
         onStateChange: event => {
           if (event.data === YT.PlayerState.ENDED && !videoTerminado) {
