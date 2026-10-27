@@ -4,6 +4,22 @@
   const portada = $("portada"), invitacion = $("invitacion"), modal = $("modalVideo"), contenedorVideo = $("contenedorVideo");
   $("horaEvento").textContent = config.hora || "Horario por confirmar";
   $("lugarEvento").textContent = config.lugar || "Escuela Primaria Rafael Ramírez";
+  // Cuenta regresiva al jueves 29 de octubre de 2026, a las 8:30 a. m. hora de México.
+  const fechaCelebracion = new Date("2026-10-29T08:30:00-06:00").getTime();
+  function actualizarCuenta() {
+    let restante = fechaCelebracion - Date.now();
+    if (restante <= 0) {
+      ["cuentaDias","cuentaHoras","cuentaMinutos","cuentaSegundos"].forEach(id => { const el = $(id); if(el) el.textContent = "00"; });
+      const mensaje = $("cuentaMensaje"); if (mensaje) mensaje.textContent = "🎉 ¡Hoy es la celebración! ¡Te esperamos!";
+      return;
+    }
+    const dias = Math.floor(restante / 86400000); restante %= 86400000;
+    const horas = Math.floor(restante / 3600000); restante %= 3600000;
+    const minutos = Math.floor(restante / 60000); restante %= 60000;
+    const segundos = Math.floor(restante / 1000);
+    [["cuentaDias",dias],["cuentaHoras",horas],["cuentaMinutos",minutos],["cuentaSegundos",segundos]].forEach(([id,n]) => { const el=$(id); if(el) el.textContent=String(n).padStart(2,"0"); });
+  }
+  actualizarCuenta(); window.setInterval(actualizarCuenta,1000);
   $("abrirInvitacion").addEventListener("click", () => {
     portada.classList.add("fuera"); invitacion.hidden = false;
     window.setTimeout(() => { portada.hidden = true; window.scrollTo({top:0,behavior:"smooth"}); }, 750);
