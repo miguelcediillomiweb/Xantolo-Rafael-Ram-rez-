@@ -140,13 +140,14 @@
   function crearReproductorMusica() {
     if (!musicaSolicitada || !window.YT || !window.YT.Player || reproductorMusica) return;
     reproductorMusica = new YT.Player("reproductorMusica", {
-      width: "1", height: "1", videoId: "elZVATZFe6A",
+      width: "180", height: "102", videoId: "elZVATZFe6A",
       playerVars: { autoplay: 1, controls: 0, disablekb: 1, fs: 0, playsinline: 1, rel: 0, loop: 1, playlist: "elZVATZFe6A", origin: window.location.origin },
       events: {
         onReady: event => {
           try { event.target.setVolume(32); event.target.playVideo(); } catch (_) {}
           const control = $("controlMusica");
           if (control) { control.hidden = false; control.textContent = "🎵 Pausar música"; }
+          // Si el navegador bloquea el inicio, el control visible permite reintentarlo tras un toque.
         },
         onStateChange: event => {
           const control = $("controlMusica");
@@ -163,10 +164,10 @@
   }
   const controlMusica = $("controlMusica");
   if (controlMusica) controlMusica.addEventListener("click", () => {
-    if (!reproductorMusica) return;
+    if (!reproductorMusica) { musicaSolicitada = true; cargarAPIYouTube(); return; }
     try {
       if (reproductorMusica.getPlayerState() === YT.PlayerState.PLAYING) reproductorMusica.pauseVideo();
-      else reproductorMusica.playVideo();
+      else { reproductorMusica.unMute(); reproductorMusica.setVolume(45); reproductorMusica.playVideo(); }
     } catch (_) {}
   });
   function cargarAPIYouTube() {
